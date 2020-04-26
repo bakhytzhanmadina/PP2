@@ -95,14 +95,11 @@ class Tank:
             self.y -= self.speed
         if self.direction == Direction.DOWN:
             self.y += self.speed
-        if self.x > screen.get_size()[0]:     
-            self.x = 0 - self.width          
-        if self.x < 0 - self.width:           
-            self.x = screen.get_size()[0]
-        if self.y > screen.get_size()[1]:
-            self.y = 0 - self.width
-        if self.y < 0 - self.width:
-            self.y = screen.get_size()[1]
+	
+        if self.x < 0 or self.x > width:
+            self.x = (self.x + width) % width
+        if self.y < 0 or self.y < height:
+            self.y = (self.y + height) % height
 
         self.draw()
     

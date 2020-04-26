@@ -248,7 +248,7 @@ def run():
 	                if pressed[tank.shoot]:
 	                    bulletSound.play()
 	                    SetCoord(tank)
-        clock.tick(FPS0            
+        clock.tick(FPS)           
         screen.fill((230,230,250)) 
         life_count()
         collision()

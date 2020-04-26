@@ -119,26 +119,6 @@ class Bullet:
         if self.state:
             pygame.draw.circle(screen,self.color,(self.x,self.y),self.radius)
 
-def SetCoord(tank):
-    if tank.direction == Direction.RIGHT:
-        x=tank.x + int(tank.width) + int(tank.width / 2)
-        y=tank.y + int(tank.width / 2)
-
-    if tank.direction == Direction.LEFT:
-        x=tank.x - int(tank.width / 2)
-        y=tank.y + int(tank.width / 2)
-
-    if tank.direction == Direction.UP:
-        x=tank.x + int(tank.width / 2)
-        y=tank.y - int(tank.width / 2)
-
-    if tank.direction == Direction.DOWN:
-        x=tank.x + int(tank.width / 2)
-        y=tank.y + int(tank.width) + int(tank.width / 2)
-
-    bul=Bullet(x,y,tank.color,tank.direction)
-    bullet.append(bul)
-
 def collision():
     for bul in bullet:
         for tank in tanks:
@@ -180,7 +160,26 @@ def life_count():
     screen.blit(tank22, (30,30))
     screen.blit(tank12, (750,30))
                 
+def SetCoord(tank):
+    if tank.direction == Direction.RIGHT:
+        x=tank.x + int(tank.width) + int(tank.width / 2)
+        y=tank.y + int(tank.width / 2)
 
+    if tank.direction == Direction.LEFT:
+        x=tank.x - int(tank.width / 2)
+        y=tank.y + int(tank.width / 2)
+
+    if tank.direction == Direction.UP:
+        x=tank.x + int(tank.width / 2)
+        y=tank.y - int(tank.width / 2)
+
+    if tank.direction == Direction.DOWN:
+        x=tank.x + int(tank.width / 2)
+        y=tank.y + int(tank.width) + int(tank.width / 2)
+
+    bul=Bullet(x,y,tank.color,tank.direction)
+    bullet.append(bul)
+	
 def message_to_screen(msg,color,y_displace=0,size="small"):
     textSurf,textRect = text_objects(msg,color,size)
     textRect.center = (int(screenwidth/2),int(screenheight/2)+y_displace)
@@ -214,7 +213,7 @@ def pause():
         pygame.display.flip()
         clock.tick(5)
 
-tank1 = Tank(350,350,4,(255,102,0))
+tank1 = Tank(200,200,4,(255,102,0),pygame.K_RIGHT,pygame.K_LEFT, pygame.K_UP,pygame.K_DOWN,pygame.K_RETURN)
 tank2 = Tank(100,100,4,(47, 116,127),pygame.K_d,pygame.K_a,pygame.K_w,pygame.K_s,pygame.K_SPACE)
 bullet1=Bullet()
 bullet2=Bullet()

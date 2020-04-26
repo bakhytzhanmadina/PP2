@@ -96,10 +96,14 @@ class Tank:
         if self.direction == Direction.DOWN:
             self.y += self.speed
 	
-        if self.x < 0 or self.x > width:
-            self.x = (self.x + width) % width
-        if self.y < 0 or self.y < height:
-            self.y = (self.y + height) % height
+        if self.x > screen.get_size()[0]:     
+            self.x = 0 - self.width          
+        if self.x < 0 - self.width:           
+            self.x = screen.get_size()[0]
+        if self.y > screen.get_size()[1]:
+            self.y = 0 - self.width
+        if self.y < 0 - self.width:
+            self.y = screen.get_size()[1]
 
         self.draw()
     
@@ -167,8 +171,8 @@ def collision():
 def life_count():
     score1= tanks[1].lives
     score2= tanks[0].lives
-    tank12 = font.render(str(score2), 1, (255, 102, 0))
-    tank22 = font.render(str(score1), 1, (47, 116,127))
+    tank12 = font.render(str(score2), 1, (160, 32, 240))
+    tank22 = font.render(str(score1), 1, (255, 130, 171))
     
     screen.blit(tank22, (30,30))
     screen.blit(tank12, (750,30))
@@ -213,8 +217,8 @@ def SetCoord(tank):
 
 
 
-tank1 = Tank(200,200,4,(255,102,0),pygame.K_RIGHT,pygame.K_LEFT, pygame.K_UP,pygame.K_DOWN,pygame.K_RETURN)
-tank2 = Tank(100,100,4,(47, 116,127),pygame.K_d,pygame.K_a,pygame.K_w,pygame.K_s,pygame.K_SPACE)
+tank1 = Tank(200,200,4,(160, 32, 240),pygame.K_RIGHT,pygame.K_LEFT, pygame.K_UP,pygame.K_DOWN,pygame.K_RETURN)
+tank2 = Tank(100,100,4,(255, 130, 171),pygame.K_d,pygame.K_a,pygame.K_w,pygame.K_s,pygame.K_SPACE)
 bullet1=Bullet()
 bullet2=Bullet()
 tanks = [tank1, tank2]
@@ -254,5 +258,5 @@ def run():
             tank.draw()
         tank1.move()
         tank2.move()
-        pygame.display.flip()  
+        pygame.display.flip() 
 		   

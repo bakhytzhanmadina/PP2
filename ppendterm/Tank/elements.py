@@ -35,6 +35,20 @@ smallfont = pygame.font.SysFont("comicsansms", 25)
 medfont = pygame.font.SysFont("comicsansms", 50)
 largefont = pygame.font.SysFont("comicsansms", 85)
 
+def message_to_screen(msg,color,y_displace=0,size="small"):
+    textSurf,textRect = text_objects(msg,color,size)
+    textRect.center = (int(screenwidth/2),int(screenheight/2)+y_displace)
+    screen.blit(textSurf, textRect)  
+
+def text_objects(text,color,size="small"):
+    if size == 'small':
+        textSurface = smallfont.render(text, 1, color)
+    if size == "medium":
+        textSurface = medfont.render(text, 1, color)
+    if size == "large":
+        textSurface = largefont.render(text, 1, color)
+    return textSurface, textSurface.get_rect()  
+
 
 class Direction(Enum):
     UP = 1
@@ -94,7 +108,7 @@ class Tank:
         self.draw()
     
 class Bullet:
-    def __init__(self,x=0,y=0,color=(0,0,0),direction=Direction.LEFT,speed=12):
+    def __init__(self,x=0,y=0,color=(0,0,0),direction=Direction.LEFT,speed=10):
         self.x=x
         self.y=y
         self.color=color
@@ -125,7 +139,7 @@ class Bullet:
 def collision():
     for bul in bullet:
         for tank in tanks:
-            if (tank.x+tank.width+bul.radius > bul.x > tank.x - bul.radius ) and ((tank.y+tank.width + bul.radius > bul.y > tank.y - bul.radius)) and bul.state==True:
+            if (tank.x-bul.radius < bul.x <tank.x+bul.radius+40)and (tank.y-bul.radius < bul.y < tank.y+bul.radius+40) and bul.state==True:
                 explosionSound.play()
                 bul.color=(0,0,0)
                 tank.lives -= 1
@@ -162,39 +176,6 @@ def life_count():
     
     screen.blit(tank22, (30,30))
     screen.blit(tank12, (750,30))
-                
-def SetCoord(tank):
-    if tank.direction == Direction.RIGHT:
-        x=tank.x + 60
-        y=tank.y + 20
-
-    if tank.direction == Direction.LEFT:
-        x=tank.x - 20
-        y=tank.y + 20
-
-    if tank.direction == Direction.UP:
-        x=tank.x + 20
-        y=tank.y - 20
-
-    if tank.direction == Direction.DOWN:
-        x=tank.x + 20
-        y=tank.y + 60
-    bul=Bullet(x,y,tank.color,tank.direction)
-    bullet.append(bul)
-	
-def message_to_screen(msg,color,y_displace=0,size="small"):
-    textSurf,textRect = text_objects(msg,color,size)
-    textRect.center = (int(screenwidth/2),int(screenheight/2)+y_displace)
-    screen.blit(textSurf, textRect)  
-
-def text_objects(text,color,size="small"):
-    if size == 'small':
-        textSurface = smallfont.render(text, 1, color)
-    if size == "medium":
-        textSurface = medfont.render(text, 1, color)
-    if size == "large":
-        textSurface = largefont.render(text, 1, color)
-    return textSurface, textSurface.get_rect()  
 
 def pause():
     paused = True
@@ -214,6 +195,27 @@ def pause():
                     quit()
         pygame.display.flip()
         clock.tick(5)
+                
+def SetCoord(tank):
+    if tank.direction == Direction.RIGHT:
+        x=tank.x + 60
+        y=tank.y + 20
+
+    if tank.direction == Direction.LEFT:
+        x=tank.x - 20
+        y=tank.y + 20
+
+    if tank.direction == Direction.UP:
+        x=tank.x + 20
+        y=tank.y - 20
+
+    if tank.direction == Direction.DOWN:
+        x=tank.x + 20
+        y=tank.y + 60
+    bul=Bullet(x,y,tank.color,tank.direction)
+    bullet.append(bul)
+
+
 
 tank1 = Tank(200,200,4,(255,102,0),pygame.K_RIGHT,pygame.K_LEFT, pygame.K_UP,pygame.K_DOWN,pygame.K_RETURN)
 tank2 = Tank(100,100,4,(47, 116,127),pygame.K_d,pygame.K_a,pygame.K_w,pygame.K_s,pygame.K_SPACE)
@@ -227,7 +229,6 @@ def run():
     FPS = 60
     mainloop = True
     while mainloop:
-        mills = clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -247,7 +248,7 @@ def run():
 	                if pressed[tank.shoot]:
 	                    bulletSound.play()
 	                    SetCoord(tank)
-                    
+        clock.tick(FPS0            
         screen.fill((230,230,250)) 
         life_count()
         collision()
@@ -258,4 +259,4 @@ def run():
         tank1.move()
         tank2.move()
         pygame.display.flip()  
-	    
+		   

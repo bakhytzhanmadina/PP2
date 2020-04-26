@@ -95,15 +95,14 @@ class Tank:
             self.y -= self.speed
         if self.direction == Direction.DOWN:
             self.y += self.speed
-        #infinite field    
-        if self.x > 800:     
-            self.x = 0 - self.width  
+        if self.x > screen.get_size()[0]:     
+            self.x = 0 - self.width          
         if self.x < 0 - self.width:           
-            self.x = 800
-        if self.y > 600:
+            self.x = screen.get_size()[0]
+        if self.y > screen.get_size()[1]:
             self.y = 0 - self.width
         if self.y < 0 - self.width:
-            self.y = 600
+            self.y = screen.get_size()[1]
 
         self.draw()
     

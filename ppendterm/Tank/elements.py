@@ -19,12 +19,15 @@ explosionSound=pygame.mixer.Sound('explosion.wav')
 white = (255,255,255)
 black = (0,0,0)
 grey = (192,192,192)
+
 red = (200,0,0)
 light_red = (255,0,0)
 med_red = (255, 153, 51)
+
 green = (34,177,76)
 light_green = (0,255,0)
 med_green = (47, 116,127)
+
 yellow = (200,200,0)
 light_yellow = (255,255,0)
 
@@ -111,7 +114,7 @@ class Bullet:
         if self.direction == Direction.DOWN:
             self.y += self.speed
         self.distance+=1
-        if self.distance>(2*screenwidth):
+        if self.distance>(2*800):
             self.state=False
         self.draw()
 
@@ -162,21 +165,20 @@ def life_count():
                 
 def SetCoord(tank):
     if tank.direction == Direction.RIGHT:
-        x=tank.x + int(tank.width) + int(tank.width / 2)
-        y=tank.y + int(tank.width / 2)
+        x=tank.x + 60
+        y=tank.y + 20
 
     if tank.direction == Direction.LEFT:
-        x=tank.x - int(tank.width / 2)
-        y=tank.y + int(tank.width / 2)
+        x=tank.x - 20
+        y=tank.y + 20
 
     if tank.direction == Direction.UP:
-        x=tank.x + int(tank.width / 2)
-        y=tank.y - int(tank.width / 2)
+        x=tank.x + 20
+        y=tank.y - 20
 
     if tank.direction == Direction.DOWN:
-        x=tank.x + int(tank.width / 2)
-        y=tank.y + int(tank.width) + int(tank.width / 2)
-
+        x=tank.x + 20
+        y=tank.y + 60
     bul=Bullet(x,y,tank.color,tank.direction)
     bullet.append(bul)
 	

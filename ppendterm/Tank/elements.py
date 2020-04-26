@@ -115,7 +115,6 @@ class Bullet:
         self.speed=speed
         self.state=True
         self.direction=direction
-        self.distance=0
         self.radius=10
 
     def move(self):
@@ -127,8 +126,9 @@ class Bullet:
             self.y -= self.speed
         if self.direction == Direction.DOWN:
             self.y += self.speed
-        self.distance+=1
-        if self.distance>(2*800):
+        if  0 >= self.x or self.x >= 800:
+            self.state=False
+        if 0 >= self.y or self.y >= 600:
             self.state=False
         self.draw()
 
